@@ -2,7 +2,7 @@
 
 Welcome to the Mobile Sebaa System Backend!
 
-## Live URL
+## Live URL https://mobile-sebaa-backend.vercel.app/
 
 Live URL is
 
@@ -34,7 +34,8 @@ Live URL is
 ## Admin Info
 
 ```bash
-Admin Email: johndoe2@example.com
+
+Admin  "email":"johndoe1@example.com",
 Password: password123
 ```
 
