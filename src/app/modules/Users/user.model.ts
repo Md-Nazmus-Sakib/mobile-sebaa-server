@@ -39,6 +39,7 @@ const userSchema = new Schema<TUser>(
       default: false,
     },
     isVerified: { type: Boolean, default: false },
+    country: { type: String, required: true },
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields

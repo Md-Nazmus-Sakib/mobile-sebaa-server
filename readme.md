@@ -52,7 +52,8 @@ Password: password123
        "name": "John Doe",
        "email": "johndoe2@example.com",
        "phone": "1234567890",
-       "password": "password123"
+       "password": "password123",
+       "country": "Bangladesh"
      }
      ```
    - **Response**:
@@ -70,6 +71,7 @@ Password: password123
          "status": "in-progress",
          "isDeleted": false,
          "isVerified": false,
+         "country": "Bangladesh",
          "_id": "676685258218b5347c0551e3",
          "createdAt": "2024-12-21T09:06:45.404Z",
          "updatedAt": "2024-12-21T09:06:45.404Z",

@@ -9,6 +9,7 @@ export type TUser = {
   status: 'in-progress' | 'blocked';
   isDeleted: boolean;
   isVerified: boolean;
+  country: string;
 };
 
 export type TUserRole = keyof typeof USER_ROLE;

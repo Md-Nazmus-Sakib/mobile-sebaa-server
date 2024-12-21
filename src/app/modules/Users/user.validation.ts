@@ -19,6 +19,7 @@ const createUserValidationSchema = z.object({
     status: z.enum(['in-progress', 'blocked']).default('in-progress'),
     isDeleted: z.boolean().default(false),
     isVerified: z.boolean().default(false),
+    country: z.string().min(2, 'Country is required'),
   }),
 });
 
