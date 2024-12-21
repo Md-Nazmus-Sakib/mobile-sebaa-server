@@ -60,25 +60,112 @@ Password: password123
      ```json
      {
        "success": true,
-       "statusCode": 200,
-       "message": "User is Created Successfully .",
+       "statusCode": 201,
+       "message": "Verification code sent to your email.",
        "data": {
          "name": "John Doe",
          "email": "johndoe2@example.com",
          "phone": "1234567890",
-         "password": "",
          "role": "User",
          "status": "in-progress",
          "isDeleted": false,
-         "_id": "670f8d19ce734daf8c67a449",
-         "createdAt": "2024-10-16T09:53:29.445Z",
-         "updatedAt": "2024-10-16T09:53:29.445Z",
+         "isVerified": false,
+         "_id": "676685258218b5347c0551e3",
+         "createdAt": "2024-12-21T09:06:45.404Z",
+         "updatedAt": "2024-12-21T09:06:45.404Z",
          "__v": 0
        }
      }
      ```
 
-2. **User Login**
+2.1. **Sign Up Verify Code**
+
+**If All Ok**
+
+- **Route**: /api/api/auth/verify-code (POST)
+- **Request Body**:
+
+  ```json
+  {
+    "email": "johndoe2@example.com",
+    "code": "123456"
+  }
+  ```
+
+- **Response**:
+
+       ```json
+       {
+         "success": true,
+         "statusCode": 200,
+         "message": "User verified successfully.",
+         "data": {
+           "message": "User verified successfully.",
+           "user": {
+             "email": "johndoe2@example.com",
+             "name": "johndoe",
+             "isVerified": true
+           }
+         }
+       }
+       ```
+
+  2.2 **Sign Up Verify Code**
+
+**If Code Expire 2 minutes**
+
+- **Route**: /api/api/auth/verify-code (POST)
+- **Request Body**:
+
+  ```json
+  {
+    "email": "johndoe2@example.com",
+    "code": "123456"
+  }
+  ```
+
+- **Response**:
+
+  ```json
+  {
+    "success": false,
+    "message": "Invalid verification code.",
+    "errorSources": [
+      {
+        "path": "",
+        "message": "Invalid verification code."
+      }
+    ]
+  }
+  ```
+
+  3. **Resend Verify Code**
+
+**If Code Expire 2 minutes**
+
+- **Route**: /api/api/auth/resend-code (POST)
+- **Request Body**:
+
+  ```json
+  {
+    "email": "johndoe2@example.com"
+  }
+  ```
+
+- **Response**:
+
+  ```json
+  {
+    "success": true,
+    "statusCode": 200,
+    "message": "Verification code resent successfully.",
+    "data": {
+      "message": "Verification code resent successfully."
+    }
+  }
+  ```
+
+3. **User Login**
    - **Route**: /api/auth/login (POST)
    - **Request Body**:
      ```json
@@ -107,9 +194,9 @@ Password: password123
        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJqb2huZG9lMkBleGFtcGxlLmNvbSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyOTEwMDc4MCwiZXhwIjoxNzI5OTY0NzgwfQ.4D4WwgiY9KicIOLtXZJDg0AXOMoq82TN6bTJDdJfQrw"
      }
      ```
-3. **Get Profile**
+4. **Get Profile**
    - **Route**: /api/users/me (GET)
-   - **Request Headers**: Authorization:jwt_token
+   - **Request Headers**: Authorization:Bearer jwt_token
    - **Response**:
      ```json
      {
@@ -130,9 +217,9 @@ Password: password123
        }
      }
      ```
-4. **Update Profile**
+5. **Update Profile**
    - **Route**: /api/users/me (PUT)
-   - **Request Headers**: Authorization:jwt_token
+   - **Request Headers**: Authorization:Bearer jwt_token
    - **Request Body**:
      ```json
      {
@@ -160,10 +247,10 @@ Password: password123
        }
      }
      ```
-5. **GET ALL USER (ADMIN ONLY)**
+6. **GET ALL USER (ADMIN ONLY)**
 
    - **Route**: /api/users (GET)
-   - **Request Headers**: Authorization:jwt_token
+   - **Request Headers**: Authorization:Bearer jwt_token
    - **Response**:
 
      ```json
@@ -205,10 +292,10 @@ Password: password123
      }
      ```
 
-6. **DELETE USER**
+7. **DELETE USER**
 
    - **Route**: /api/users/me (DELETE)
-   - **Request Headers**: Authorization:jwt_token
+   - **Request Headers**: Authorization:Bearer jwt_token
    - **Response**:
 
      ```json
@@ -231,10 +318,10 @@ Password: password123
      }
      ```
 
-7. **Blocked USER (ADMIN ONLY)**
+8. **Blocked USER (ADMIN ONLY)**
 
    - **Route**: /api/users/status (PUT)
-   - **Request Headers**: Authorization:jwt_token
+   - **Request Headers**: Authorization:Bearer jwt_token
    - **Request Body**:
 
    ```json
@@ -271,7 +358,7 @@ Password: password123
 1.  **Create Shop (Admin and Sp Only)**
 
         - **Route**: /api/shop/create-shop (POST)
-        - **Request Headers**: Authorization:jwt_token
+        - **Request Headers**: Authorization:Bearer jwt_token
         - **Request Body**:
 
     possible Value of
@@ -344,7 +431,7 @@ Password: password123
 2. **Get Shop Which is Created By Sp(Service Provider)**
 
    - **Route**: /api/shop/my-shop (GET)
-   - **Request Headers**: Authorization:jwt_token
+   - **Request Headers**: Authorization:Bearer jwt_token
    - **Response**:
 
      ```json
@@ -380,7 +467,7 @@ Password: password123
 
 3. **Update Shop (Admin and Sp(Service Provider) Only)**
    - **Route**: /api/shop/my-shop/:id (PUT)
-   - **Request Headers**: Authorization:jwt_token
+   - **Request Headers**: Authorization:Bearer jwt_token
    - **Request Body**:
      ```json
      {
@@ -612,7 +699,7 @@ Password: password123
 
 7. **Delete Shop(Admin and Sp Only)**
    - **Route**: /api/shop/my-shop/:id (DELETE)
-   - **Request Headers**: Authorization:jwt_token
+   - **Request Headers**: Authorization:Bearer jwt_token
    - **Response**:
      ```json
      {
@@ -646,7 +733,7 @@ Password: password123
      ```
 8. **'Approve','Pending','Rejected'(Admin Only)**
    - **Route**: /api/shop/status/:id (PUT)
-   - **Request Headers**: Authorization:jwt_token
+   - **Request Headers**: Authorization:Bearer jwt_token
 
 - **Request Body**:
 

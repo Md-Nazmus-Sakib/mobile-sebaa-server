@@ -16,7 +16,7 @@ const createUser = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: 'User registered successfully',
+    message: 'Verification code sent to your email.',
     data: result,
   });
 });
@@ -27,21 +27,55 @@ const createUser = catchAsync(async (req, res) => {
 
 //Login User Controller
 const loginUser = catchAsync(async (req, res) => {
-  const loginUserData = req.body;
-  const result = await AuthServices.loginUser(loginUserData);
+  const payload = req.body;
+  const result = await AuthServices.loginUser(payload);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'User is Logged in successfully',
-    token: result.accessToken,
-    data: result.responseUserData,
+    message: 'User logged in successfully.',
+    data: result,
   });
 });
 
 //==============================================================
 
+//==========================================================
+
+//Verify User Controller
+const verifyUser = catchAsync(async (req, res) => {
+  const verifiedCodeData = req.body;
+  const result = await AuthServices.verifyUserData(verifiedCodeData);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User verified successfully.',
+    data: result,
+  });
+});
+
+//=========================================================
+//==========================================================
+
+//Resend Verify code Controller
+const resendVerificationCode = catchAsync(async (req, res) => {
+  const { email } = req.body;
+  const result = await AuthServices.verificationCodeResend(email);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Verification code resent successfully.',
+    data: result,
+  });
+});
+
+//=========================================================
+
 export const AuthController = {
   createUser,
   loginUser,
+  verifyUser,
+  resendVerificationCode,
 };
