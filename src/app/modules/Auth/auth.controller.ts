@@ -5,6 +5,7 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponce';
 import { AuthServices } from './auth.service';
+import AppError from '../../errors/AppErrors';
 
 //==========================================================
 
@@ -72,10 +73,40 @@ const resendVerificationCode = catchAsync(async (req, res) => {
 });
 
 //=========================================================
+//==========================================================
+
+//Forget password Controller
+const forgetPassword = catchAsync(async (req, res) => {
+  const { email } = req.body; // Destructure email from req.body
+  const result = await AuthServices.forgetPassword(email);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Password Reset code has been sent successfully.',
+    data: result,
+  });
+});
+//==========================================================
+
+//Reset password Controller
+const resetPassword = catchAsync(async (req, res) => {
+  const result = await AuthServices.resetPassword(req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Password reset successfully!',
+    data: result,
+  });
+});
+
+//=========================================================
 
 export const AuthController = {
   createUser,
   loginUser,
   verifyUser,
   resendVerificationCode,
+  forgetPassword,
+  resetPassword,
 };

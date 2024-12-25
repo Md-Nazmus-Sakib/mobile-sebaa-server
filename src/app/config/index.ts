@@ -14,4 +14,5 @@ export default {
   email_port: process.env.EMAIL_PORT,
   email_user: process.env.EMAIL_USER,
   email_pass: process.env.EMAIL_PASS,
+  reset_pass_ui_link: process.env.RESET_PASS_UI_LINK,
 };

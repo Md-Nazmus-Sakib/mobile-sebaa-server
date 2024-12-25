@@ -21,4 +21,16 @@ router.post('/verify-code', AuthController.verifyUser);
 
 router.post('/resend-code', AuthController.resendVerificationCode);
 
+router.post(
+  '/forget-password',
+  validateRequest(AuthValidation.forgetPasswordValidationSchema),
+  AuthController.forgetPassword,
+);
+
+router.post(
+  '/reset-password',
+  validateRequest(AuthValidation.resetPasswordValidationSchema),
+  AuthController.resetPassword,
+);
+
 export const AuthRoutes = router;

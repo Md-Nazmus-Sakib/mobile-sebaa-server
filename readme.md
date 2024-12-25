@@ -98,21 +98,31 @@ Password: password123
 
        ```json
        {
-         "success": true,
-         "statusCode": 200,
-         "message": "User verified successfully.",
-         "data": {
-           "message": "User verified successfully.",
-           "user": {
-             "email": "johndoe2@example.com",
-             "name": "johndoe",
-             "isVerified": true
-           }
-         }
-       }
-       ```
+           "success": true,
+
+  "statusCode": 200,
+  "message": "User verified successfully.",
+  "data": {
+  "\_id": "676bc17635e5c5d4ba1e78fb",
+  "name": "johndoe2",
+  "email": "johndoe2@example.com",
+  "phone": "1234567890",
+  "role": "User",
+  "status": "in-progress",
+  "isDeleted": false,
+  "isVerified": true,
+  "country": "Bangladesh",
+  "createdAt": "2024-12-25T08:25:26.407Z",
+  "updatedAt": "2024-12-25T08:26:55.620Z",
+  "\_v": 0,
+  "password": ""
+  }
+  }
+
+  ```
 
   2.2 **Sign Up Verify Code**
+  ```
 
 **If Code Expire 2 minutes**
 
@@ -167,7 +177,7 @@ Password: password123
   }
   ```
 
-3. **User Login**
+4. **User Login**
    - **Route**: /api/auth/login (POST)
    - **Request Body**:
      ```json
@@ -196,7 +206,41 @@ Password: password123
        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJqb2huZG9lMkBleGFtcGxlLmNvbSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyOTEwMDc4MCwiZXhwIjoxNzI5OTY0NzgwfQ.4D4WwgiY9KicIOLtXZJDg0AXOMoq82TN6bTJDdJfQrw"
      }
      ```
-4. **Get Profile**
+5. **Forget Password**
+   - **Route**: /api/auth/forget-password(POST)
+   - **Request Body**:
+     ```json
+     {
+       "email": "johndoe2@example.com"
+     }
+     ```
+   - **Response**:
+     ```json
+     {
+       "success": true,
+       "statusCode": 200,
+       "message": "Password Reset code has been sent successfully."
+     }
+     ```
+6. **Reset Password**
+   - **Route**: /api/auth/reset-password(POST)
+   - **Request Body**:
+     ```json
+     {
+       "email": "johndoe2@example.com",
+       "code": "123456",
+       "newPassword": "password001"
+     }
+     ```
+   - **Response**:
+     ```json
+     {
+       "success": true,
+       "statusCode": 200,
+       "message": "Password reset successfully!"
+     }
+     ```
+7. **Get Profile**
    - **Route**: /api/users/me (GET)
    - **Request Headers**: Authorization:Bearer jwt_token
    - **Response**:
@@ -219,7 +263,7 @@ Password: password123
        }
      }
      ```
-5. **Update Profile**
+8. **Update Profile**
    - **Route**: /api/users/me (PUT)
    - **Request Headers**: Authorization:Bearer jwt_token
    - **Request Body**:
@@ -249,7 +293,7 @@ Password: password123
        }
      }
      ```
-6. **GET ALL USER (ADMIN ONLY)**
+9. **GET ALL USER (ADMIN ONLY)**
 
    - **Route**: /api/users (GET)
    - **Request Headers**: Authorization:Bearer jwt_token
@@ -294,66 +338,66 @@ Password: password123
      }
      ```
 
-7. **DELETE USER**
+10. **DELETE USER**
 
-   - **Route**: /api/users/me (DELETE)
-   - **Request Headers**: Authorization:Bearer jwt_token
-   - **Response**:
+    - **Route**: /api/users/me (DELETE)
+    - **Request Headers**: Authorization:Bearer jwt_token
+    - **Response**:
 
-     ```json
-     {
-       "success": true,
-       "statusCode": 200,
-       "message": "User Deleted successfully",
-       "data": {
-         "_id": "670ff66729b8f919e5f39a4b",
-         "name": "Doe",
-         "email": "doe@example.com",
-         "phone": "1234567890",
-         "role": "User",
-         "status": "in-progress",
-         "isDeleted": true,
-         "createdAt": "2024-10-16T17:22:47.723Z",
-         "updatedAt": "2024-10-16T20:15:56.936Z",
-         "__v": 0
-       }
-     }
-     ```
+      ```json
+      {
+        "success": true,
+        "statusCode": 200,
+        "message": "User Deleted successfully",
+        "data": {
+          "_id": "670ff66729b8f919e5f39a4b",
+          "name": "Doe",
+          "email": "doe@example.com",
+          "phone": "1234567890",
+          "role": "User",
+          "status": "in-progress",
+          "isDeleted": true,
+          "createdAt": "2024-10-16T17:22:47.723Z",
+          "updatedAt": "2024-10-16T20:15:56.936Z",
+          "__v": 0
+        }
+      }
+      ```
 
-8. **Blocked USER (ADMIN ONLY)**
+11. **Blocked USER (ADMIN ONLY)**
 
-   - **Route**: /api/users/status (PUT)
-   - **Request Headers**: Authorization:Bearer jwt_token
-   - **Request Body**:
+    - **Route**: /api/users/status (PUT)
+    - **Request Headers**: Authorization:Bearer jwt_token
+    - **Request Body**:
 
-   ```json
-   {
-     "email": "doe@example.com",
-     "status": "blocked" or "in-progress"
-   }
-   ```
+    ```json
+    {
+      "email": "doe@example.com",
+      "status": "blocked" or "in-progress"
+    }
+    ```
 
-   - **Response**:
+    - **Response**:
 
-     ```json
-     {
-       "success": true,
-       "statusCode": 200,
-       "message": "User status successfully updated to blocked.",
-       "data": {
-         "_id": "670ff66729b8f919e5f39a4b",
-         "name": "Doe",
-         "email": "doe@example.com",
-         "phone": "1234567890",
-         "role": "User",
-         "status": "blocked",
-         "isDeleted": true,
-         "createdAt": "2024-10-16T17:22:47.723Z",
-         "updatedAt": "2024-10-16T21:03:01.869Z",
-         "__v": 0
-       }
-     }
-     ```
+      ```json
+      {
+        "success": true,
+        "statusCode": 200,
+        "message": "User status successfully updated to blocked.",
+        "data": {
+          "_id": "670ff66729b8f919e5f39a4b",
+          "name": "Doe",
+          "email": "doe@example.com",
+          "phone": "1234567890",
+          "role": "User",
+          "status": "blocked",
+          "isDeleted": true,
+          "createdAt": "2024-10-16T17:22:47.723Z",
+          "updatedAt": "2024-10-16T21:03:01.869Z",
+          "__v": 0
+        }
+      }
+      ```
 
 ## **Shop Routes**:
 
