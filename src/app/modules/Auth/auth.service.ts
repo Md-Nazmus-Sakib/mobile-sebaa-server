@@ -166,7 +166,10 @@ const loginUser = async (payload: TLoginUser) => {
     config.jwt_refresh_expires_in!, // Use the correct expiration time for access tokens
   );
 
-  return { token, user: { email: user.email, name: user.name } };
+  // Exclude password from the user object before returning
+  const { password, ...userWithoutPassword } = user.toObject();
+
+  return { token, user: userWithoutPassword };
 };
 
 //Verification Code Resend
