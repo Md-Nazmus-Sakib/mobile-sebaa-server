@@ -129,8 +129,13 @@ const loginUser = async (payload: TLoginUser) => {
     );
   }
 
+  // Normalize email (e.g., trim, convert to lowercase)
+  const sanitizedEmail = payload.email.trim().toLowerCase();
+
   // Find the user and include the password field
-  const user = await User.findOne({ email: payload.email }).select('+password');
+  const user = await User.findOne({ email: sanitizedEmail }).select(
+    '+password',
+  );
 
   // Check if the user exists
   if (!user) {
@@ -148,13 +153,33 @@ const loginUser = async (payload: TLoginUser) => {
     throw new AppError(httpStatus.FORBIDDEN, 'This account has been deleted.');
   }
 
+  // Handle unverified users
   if (!user.isVerified) {
+    const code = generateRandomCode();
+    const expiresAt = new Date(Date.now() + 2 * 60 * 1000); // 2 minutes expiry time
+
+    // Update or create a verification code in the database
+    await VerificationCode.findOneAndUpdate(
+      { userId: user._id },
+      { code, expiresAt },
+      { upsert: true, new: true },
+    );
+
+    // Send the verification email
+
+    await transporter.sendMail({
+      from: config.email_user,
+      to: user.email,
+      subject: 'Verify Your Email',
+      html: `<p>Your verification code is: <b>${code}</b></p><p>This code will expire in 2 minutes.</p>`,
+    });
     throw new AppError(
-      httpStatus.FORBIDDEN,
-      'Please verify your email before logging in.',
+      httpStatus.UNAUTHORIZED,
+      'Verification code resend successfully.Please check your email.',
     );
   }
 
+  // Blocked account check
   if (user.status === 'blocked') {
     throw new AppError(httpStatus.FORBIDDEN, 'This account has been blocked.');
   }
@@ -163,7 +188,7 @@ const loginUser = async (payload: TLoginUser) => {
   const token = createToken(
     { userEmail: user.email, role: user.role },
     config.jwt_access_token!,
-    config.jwt_refresh_expires_in!, // Use the correct expiration time for access tokens
+    config.jwt_refresh_expires_in!,
   );
 
   // Exclude password from the user object before returning
