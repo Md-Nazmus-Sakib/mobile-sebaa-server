@@ -228,7 +228,6 @@ Password: password123
      ```json
      {
        "email": "johndoe2@example.com",
-       "code": "123456",
        "newPassword": "password001"
      }
      ```

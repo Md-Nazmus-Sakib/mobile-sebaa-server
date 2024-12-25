@@ -24,9 +24,6 @@ const resetPasswordValidationSchema = z.object({
         required_error: 'Email ID is required!',
       })
       .email('Invalid email format!'),
-    code: z.string({
-      required_error: 'Verify reset Code is required!',
-    }),
     newPassword: z.string({
       required_error: 'User New password is required!',
     }),

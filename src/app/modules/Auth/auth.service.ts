@@ -284,7 +284,6 @@ const forgetPassword = async (email: string) => {
 
 const resetPassword = async (payload: {
   email: string;
-  code: string;
   newPassword: string;
 }) => {
   // Check if the user exists using the provided email
@@ -306,7 +305,6 @@ const resetPassword = async (payload: {
   // Validate the verification code
   const record = await VerificationCode.findOne({
     userId: user._id,
-    code: payload.code,
   });
   if (!record) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Invalid verification code.');
@@ -316,7 +314,7 @@ const resetPassword = async (payload: {
   if (record.expiresAt < new Date()) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
-      'Verification code has expired.',
+      'Reset Verification code has expired.',
     );
   }
 
