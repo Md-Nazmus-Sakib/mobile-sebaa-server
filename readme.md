@@ -292,7 +292,7 @@ Password: password123
        }
      }
      ```
-9. **Profile Image**
+9. **Profile Image** (The application is not working on free hosting; it only functions on servers that support file handling.)
 
    - **Route**: /api/users/upload-image (PUT)
    - **Request Headers**: Authorization:Bearer jwt_token
