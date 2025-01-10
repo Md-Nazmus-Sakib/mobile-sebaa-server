@@ -5,6 +5,7 @@ export type TUser = {
   email: string;
   phone: string;
   password: string;
+  profileImg: string;
   role: 'Admin' | 'User' | 'Sp';
   status: 'in-progress' | 'blocked';
   isDeleted: boolean;

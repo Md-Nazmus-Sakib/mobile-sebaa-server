@@ -23,6 +23,11 @@ const userSchema = new Schema<TUser>(
       required: true,
     },
 
+    profileImg: {
+      type: String,
+      default: 'No-Image',
+    },
+
     role: {
       type: String,
       enum: ['Admin', 'User', 'Sp'], // Aligned with your role types

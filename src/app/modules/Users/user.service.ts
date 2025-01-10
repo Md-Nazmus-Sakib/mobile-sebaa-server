@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status';
 import AppError from '../../errors/AppErrors';
 import { TUser } from './user.interface';
 import { User } from './user.model';
+import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 //================================================================================
 const getUserDataFromDB = async (userEmail: string) => {
   const result = await User.findOne({ email: userEmail }).select('-password');
@@ -100,10 +102,64 @@ const getAllUserDataFromDB = async () => {
   return { users, totalUsers };
 };
 //================================================================================
+
+//================================================================================
+const createImageIntoDB = async (file: any, userEmail: string) => {
+  // Step 1: Find the user by email
+  const user = await User.findOne({ email: userEmail });
+  if (!user) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      `User with the email ${userEmail} does not exist.`,
+    );
+  }
+
+  // Step 2: Check if the user is blocked
+  if (user.status === 'blocked') {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      `The user with the email ${userEmail} is blocked by Admin and cannot upload an image.`,
+    );
+  }
+
+  // Step 3: Check if the file exists
+  if (!file) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'No file provided for upload.');
+  }
+
+  try {
+    // Step 4: Upload image to Cloudinary
+    const imageName = `${user.email}-profile-image`;
+    const path = file.path; // Path to the uploaded file
+
+    const { secure_url } = await sendImageToCloudinary(imageName, path);
+
+    // Step 5: Update the user's profile image in the database
+    const updatedUser = await User.findOneAndUpdate(
+      { email: userEmail },
+      { $set: { profileImg: secure_url } }, // Update the profileImg field
+      { new: true, runValidators: true }, // Return the updated document
+    )
+      .select('-password') // Exclude the password field
+      .lean(); // Converts the Mongoose document to a plain object
+
+    // Step 6: Return all user data including the updated profile image
+    return updatedUser;
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw new AppError(
+      httpStatus.INTERNAL_SERVER_ERROR,
+      'An error occurred while uploading the image.',
+    );
+  }
+};
+
+//================================================================================
 export const UserServices = {
   getUserDataFromDB,
   updateUserDataIntoDB,
   deleteUserDataIntoDB,
   toggleUserStatusIntoDB,
   getAllUserDataFromDB,
+  createImageIntoDB,
 };

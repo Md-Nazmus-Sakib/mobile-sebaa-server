@@ -292,52 +292,86 @@ Password: password123
        }
      }
      ```
-9. **GET ALL USER (ADMIN ONLY)**
+9. **Profile Image**
 
-   - **Route**: /api/users (GET)
+   - **Route**: /api/users/upload-image (PUT)
    - **Request Headers**: Authorization:Bearer jwt_token
-   - **Response**:
+   - **Request Body**:
 
+     ```form-data file
+
+     ```
+
+   - **Response**:
      ```json
      {
        "success": true,
-     "statusCode": 200,
-     "message":  "All User profile retrieved successfully",
-     "data": {
-        "users": [
-
-            {
-                "_id": "670f8d19ce734daf8c67a449",
-                "name": "John Updated",
-                "email": "johndoe1@example.com",
-                "phone": "0987654325",
-                "role": "Admin",
-                "status": "in-progress",
-                "isDeleted": false,
-                "createdAt": "2024-10-16T09:53:29.445Z",
-                "updatedAt": "2024-10-16T19:11:06.257Z",
-                "__v": 0
-            },
-            {
-                "_id": "670ff66729b8f919e5f39a4b",
-                "name": "Doe",
-                "email": "doe@example.com",
-                "phone": "1234567890",
-                "role": "User",
-                "status": "in-progress",
-                "isDeleted": false,
-                "createdAt": "2024-10-16T17:22:47.723Z",
-                "updatedAt": "2024-10-16T17:22:47.723Z",
-                "__v": 0
-            }
-            ...other users...
-        ],
-        "totalUsers": 9
-     }
+       "statusCode": 200,
+       "message": "Image uploaded successfully",
+       "data": {
+         "_id": "676bcb8339ac022b416134ac",
+         "name": "John",
+         "email": "johndoe1@example.com",
+         "phone": "1234567890",
+         "role": "User",
+         "status": "in-progress",
+         "isDeleted": false,
+         "isVerified": true,
+         "country": "Bangladesh",
+         "createdAt": "2024-12-25T09:08:19.256Z",
+         "updatedAt": "2025-01-10T18:20:36.636Z",
+         "__v": 0,
+         "profileImg": "https://res.cloudinary.com/dvfnxtovx/image/upload/v1736533235/johndoe1%40example-file-image.jpg"
+       }
      }
      ```
 
-10. **DELETE USER**
+10. **GET ALL USER (ADMIN ONLY)**
+
+    - **Route**: /api/users (GET)
+    - **Request Headers**: Authorization:Bearer jwt_token
+    - **Response**:
+
+      ```json
+      {
+        "success": true,
+      "statusCode": 200,
+      "message":  "All User profile retrieved successfully",
+      "data": {
+         "users": [
+
+             {
+                 "_id": "670f8d19ce734daf8c67a449",
+                 "name": "John Updated",
+                 "email": "johndoe1@example.com",
+                 "phone": "0987654325",
+                 "role": "Admin",
+                 "status": "in-progress",
+                 "isDeleted": false,
+                 "createdAt": "2024-10-16T09:53:29.445Z",
+                 "updatedAt": "2024-10-16T19:11:06.257Z",
+                 "__v": 0
+             },
+             {
+                 "_id": "670ff66729b8f919e5f39a4b",
+                 "name": "Doe",
+                 "email": "doe@example.com",
+                 "phone": "1234567890",
+                 "role": "User",
+                 "status": "in-progress",
+                 "isDeleted": false,
+                 "createdAt": "2024-10-16T17:22:47.723Z",
+                 "updatedAt": "2024-10-16T17:22:47.723Z",
+                 "__v": 0
+             }
+             ...other users...
+         ],
+         "totalUsers": 9
+      }
+      }
+      ```
+
+11. **DELETE USER**
 
     - **Route**: /api/users/me (DELETE)
     - **Request Headers**: Authorization:Bearer jwt_token
@@ -363,7 +397,7 @@ Password: password123
       }
       ```
 
-11. **Blocked USER (ADMIN ONLY)**
+12. **Blocked USER (ADMIN ONLY)**
 
     - **Route**: /api/users/status (PUT)
     - **Request Headers**: Authorization:Bearer jwt_token
