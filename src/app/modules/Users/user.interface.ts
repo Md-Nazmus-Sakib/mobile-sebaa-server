@@ -7,6 +7,7 @@ export type TUser = {
   password: string;
   profileImg: string;
   role: 'Admin' | 'User' | 'Sp';
+  roleChanged: boolean;
   status: 'in-progress' | 'blocked';
   isDeleted: boolean;
   isVerified: boolean;

@@ -60,6 +60,32 @@ const toggleUserStatus = catchAsync(async (req, res) => {
   });
 });
 //========================================================================
+//========================================================================
+const changedMyRoleRequest = catchAsync(async (req, res) => {
+  const userEmail = req.user.userEmail;
+  const result = await UserServices.changeMyRoleRequestInDB(userEmail);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: `User Role Request Send Please Wait for admin approval.`,
+    data: result,
+  });
+});
+//========================================================================
+//========================================================================
+const changeUserRole = catchAsync(async (req, res) => {
+  const { email, updateRole } = req.body;
+  const result = await UserServices.changeUserRoleInDB(email, updateRole);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: `User Role successfully updated to ${updateRole}.`,
+    data: result,
+  });
+});
+//========================================================================
 
 //========================================================================
 const allUserData = catchAsync(async (req, res) => {
@@ -102,6 +128,8 @@ export const UserController = {
   updateUserData,
   deleteUserData,
   toggleUserStatus,
+  changedMyRoleRequest,
+  changeUserRole,
   allUserData,
   ImageUploads,
 };

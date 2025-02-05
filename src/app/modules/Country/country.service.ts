@@ -1,11 +1,13 @@
-import { Country } from './country.model';
+import { Countries } from './country.model';
 
 export const CountryService = {
-  getAllCountries: async (search?: string) => {
-    const filter = search
-      ? { name: { $regex: search, $options: 'i' } } // Case-insensitive search
-      : {}; // If no search term is provided, fetch all countries
+  getOneCountry: async (searchQuery: string) => {
+    if (!searchQuery) return null;
 
-    return await Country.find(filter).sort({ name: 1 }); // Sorting countries alphabetically by name
+    const country = await Countries.find({
+      name: { $regex: new RegExp(searchQuery, 'i') }, // Case-insensitive regex search
+    });
+
+    return country;
   },
 };

@@ -93,6 +93,42 @@ const toggleUserStatusIntoDB = async (email: string, status: string) => {
   return result;
 };
 //================================================================================
+//================================================================================
+const changeMyRoleRequestInDB = async (email: string) => {
+  const result = await User.findOneAndUpdate(
+    { email },
+    { $set: { roleChanged: true } },
+    { new: true, runValidators: true },
+  ).select('-password');
+
+  if (!result) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      `User with the email ${email} does not exist.`,
+    );
+  }
+
+  return result;
+};
+//================================================================================
+//================================================================================
+const changeUserRoleInDB = async (email: string, updateRole: string) => {
+  const result = await User.findOneAndUpdate(
+    { email },
+    { $set: { role: updateRole, roleChanged: false } }, // Ensure correct update format
+    { new: true, runValidators: true },
+  ).select('-password');
+
+  if (!result) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      `User with the email ${email} does not exist.`,
+    );
+  }
+
+  return result;
+};
+//================================================================================
 
 //================================================================================
 const getAllUserDataFromDB = async () => {
@@ -160,6 +196,8 @@ export const UserServices = {
   updateUserDataIntoDB,
   deleteUserDataIntoDB,
   toggleUserStatusIntoDB,
+  changeMyRoleRequestInDB,
+  changeUserRoleInDB,
   getAllUserDataFromDB,
   createImageIntoDB,
 };

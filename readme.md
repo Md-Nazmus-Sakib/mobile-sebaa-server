@@ -203,7 +203,7 @@ Password: password123
          "updatedAt": "2024-10-16T09:53:29.445Z",
          "__v": 0
        },
-       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJqb2huZG9lMkBleGFtcGxlLmNvbSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyOTEwMDc4MCwiZXhwIjoxNzI5OTY0NzgwfQ.4D4WwgiY9KicIOLtXZJDg0AXOMoq82TN6bTJDdJfQrw"
+       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6Ik.eyJ1c2VyRW1haWwiOiJqb2hubGUiOiJBZG1pbiIsImlhdCI6MTcyOTEwMDc4MCwiZXhwIjoxNzI5OTY0NzgwfQ.4D4WwgiY9KicIOLtXZJDg0AXOMoq82TN6bTJDdJfQrw"
      }
      ```
 5. **Forget Password**
@@ -262,71 +262,134 @@ Password: password123
        }
      }
      ```
-8. **Update Profile**
-   - **Route**: /api/users/me (PUT)
+8. **Update Role Only User**
+
+   - **Route**: /api/users/changedMyRole (PUT)
    - **Request Headers**: Authorization:Bearer jwt_token
-   - **Request Body**:
-     ```json
-     {
-       "name": "John Updated",
-       "phone": "0987654325"
-     }
-     ```
    - **Response**:
      ```json
      {
        "success": true,
        "statusCode": 200,
-       "message": "Profile updated successfully",
+       "message": "User Role Request Send Please Wait for admin approval.",
        "data": {
-         "_id": "670f8d19ce734daf8c67a449",
-         "name": "John Updated",
-         "email": "johndoe1@example.com",
-         "phone": "0987654325",
-         "role": "Admin",
-         "status": "in-progress",
-         "isDeleted": false,
-         "createdAt": "2024-10-16T09:53:29.445Z",
-         "updatedAt": "2024-10-16T19:11:06.257Z",
-         "__v": 0
-       }
-     }
-     ```
-9. **Profile Image** (The application is not working on free hosting; it only functions on servers that support file handling.)
-
-   - **Route**: /api/users/upload-image (PUT)
-   - **Request Headers**: Authorization:Bearer jwt_token
-   - **Request Body**:
-
-     ```form-data file
-
-     ```
-
-   - **Response**:
-     ```json
-     {
-       "success": true,
-       "statusCode": 200,
-       "message": "Image uploaded successfully",
-       "data": {
-         "_id": "676bcb8339ac022b416134ac",
-         "name": "John",
-         "email": "johndoe1@example.com",
+         "_id": "67a30be71e2838fcd7007d2a",
+         "name": "johndoe",
+         "email": "johndoe2@example.com",
          "phone": "1234567890",
+         "profileImg": "No-Image",
          "role": "User",
          "status": "in-progress",
          "isDeleted": false,
          "isVerified": true,
          "country": "Bangladesh",
-         "createdAt": "2024-12-25T09:08:19.256Z",
-         "updatedAt": "2025-01-10T18:20:36.636Z",
+         "createdAt": "2025-02-05T06:57:43.261Z",
+         "updatedAt": "2025-02-05T07:06:51.240Z",
          "__v": 0,
-         "profileImg": "https://res.cloudinary.com/dvfnxtovx/image/upload/v1736533235/johndoe1%40example-file-image.jpg"
+         "roleChanged": true
        }
      }
      ```
 
-10. **GET ALL USER (ADMIN ONLY)**
+9. **Update Role Changed Only Admin**
+   - **Route**: /api/users//role (PUT)
+   - **Request Headers**: Authorization:Bearer jwt_token
+   - **Request Body**:
+     ```json
+     {
+       "email": "johndoe2@example.com",
+       "updateRole": "Sp"
+     }
+     ```
+   - **Response**:
+     ```json
+     {
+       "success": true,
+       "statusCode": 200,
+       "message": "User Role Request Send Please Wait for admin approval.",
+       "data": {
+         "_id": "67a30be71e2838fcd7007d2a",
+         "name": "johndoe",
+         "email": "johndoe2@example.com",
+         "phone": "1234567890",
+         "profileImg": "No-Image",
+         "role": "User",
+         "status": "in-progress",
+         "isDeleted": false,
+         "isVerified": true,
+         "country": "Bangladesh",
+         "createdAt": "2025-02-05T06:57:43.261Z",
+         "updatedAt": "2025-02-05T07:06:51.240Z",
+         "__v": 0,
+         "roleChanged": true
+       }
+     }
+     ```
+10. **Update Profile**
+    - **Route**: /api/users/me (PUT)
+    - **Request Headers**: Authorization:Bearer jwt_token
+    - **Request Body**:
+      ```json
+      {
+        "name": "John Updated",
+        "phone": "0987654325"
+      }
+      ```
+    - **Response**:
+      ```json
+      {
+        "success": true,
+        "statusCode": 200,
+        "message": "Profile updated successfully",
+        "data": {
+          "_id": "670f8d19ce734daf8c67a449",
+          "name": "John Updated",
+          "email": "johndoe1@example.com",
+          "phone": "0987654325",
+          "role": "Admin",
+          "status": "in-progress",
+          "isDeleted": false,
+          "createdAt": "2024-10-16T09:53:29.445Z",
+          "updatedAt": "2024-10-16T19:11:06.257Z",
+          "__v": 0
+        }
+      }
+      ```
+11. **Profile Image** (The application is not working on free hosting; it only functions on servers that support file handling.)
+
+    - **Route**: /api/users/upload-image (PUT)
+    - **Request Headers**: Authorization:Bearer jwt_token
+    - **Request Body**:
+
+      ```form-data file
+
+      ```
+
+    - **Response**:
+      ```json
+      {
+        "success": true,
+        "statusCode": 200,
+        "message": "Image uploaded successfully",
+        "data": {
+          "_id": "676bcb8339ac022b416134ac",
+          "name": "John",
+          "email": "johndoe1@example.com",
+          "phone": "1234567890",
+          "role": "User",
+          "status": "in-progress",
+          "isDeleted": false,
+          "isVerified": true,
+          "country": "Bangladesh",
+          "createdAt": "2024-12-25T09:08:19.256Z",
+          "updatedAt": "2025-01-10T18:20:36.636Z",
+          "__v": 0,
+          "profileImg": "https://res.cloudinary.com/dvfnxtovx/image/upload/v1736533235/johndoe1%40example-file-image.jpg"
+        }
+      }
+      ```
+
+12. **GET ALL USER (ADMIN ONLY)**
 
     - **Route**: /api/users (GET)
     - **Request Headers**: Authorization:Bearer jwt_token
@@ -371,7 +434,7 @@ Password: password123
       }
       ```
 
-11. **DELETE USER**
+13. **DELETE USER**
 
     - **Route**: /api/users/me (DELETE)
     - **Request Headers**: Authorization:Bearer jwt_token
@@ -397,7 +460,7 @@ Password: password123
       }
       ```
 
-12. **Blocked USER (ADMIN ONLY)**
+14. **Blocked USER (ADMIN ONLY)**
 
     - **Route**: /api/users/status (PUT)
     - **Request Headers**: Authorization:Bearer jwt_token
@@ -851,5 +914,35 @@ Password: password123
         "updatedAt": "2024-10-19T21:28:56.060Z",
         "__v": 0
       }
+    }
+    ```
+
+9. **Country Search**
+   - **Route**: [/api/country?search=af] (GET)
+
+- **Request Body**:
+
+  - **Response**:
+    ```json
+    {
+      "success": true,
+      "statusCode": 200,
+      "message": "All Countries retrieved successfully",
+      "data": [
+        {
+          "_id": "6799ea92c293d78acbe703e7",
+          "name": "Afghanistan",
+          "code": "AF",
+          "dial_code": "+93",
+          "flag": "https://flagcdn.com/w320/af.png"
+        },
+        {
+          "_id": "6799ea92c293d78acbe7040c",
+          "name": "South Africa",
+          "code": "ZA",
+          "dial_code": "+27",
+          "flag": "https://flagcdn.com/w320/za.png"
+        }
+      ]
     }
     ```

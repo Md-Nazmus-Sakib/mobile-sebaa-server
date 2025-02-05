@@ -17,7 +17,7 @@ app.get('/', (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     message:
-      'Welcome to the Mobile Sebaa API! Use /api/shops  to See All Mobile Shop Data.',
+      'Welcome to the Mobile Sebaa API! Use /api/shop  to See All Mobile Shop Data.',
   });
 });
 

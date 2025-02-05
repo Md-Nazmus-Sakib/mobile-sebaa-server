@@ -23,6 +23,14 @@ router.delete(
   UserController.deleteUserData,
 );
 router.put('/status', auth(USER_ROLE.Admin), UserController.toggleUserStatus);
+router.put(
+  '/changedMyRole',
+  auth(USER_ROLE.User),
+  UserController.changedMyRoleRequest,
+);
+
+router.put('/role', auth(USER_ROLE.Admin), UserController.changeUserRole);
+
 router.get('/', auth(USER_ROLE.Admin), UserController.allUserData);
 
 router.put(

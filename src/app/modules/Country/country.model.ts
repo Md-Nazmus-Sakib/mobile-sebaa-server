@@ -10,4 +10,4 @@ const CountrySchema: Schema = new Schema<ICountry>({
   },
 });
 
-export const Country = mongoose.model<ICountry>('Country', CountrySchema);
+export const Countries = mongoose.model<ICountry>('Countries', CountrySchema);
