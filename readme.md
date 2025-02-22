@@ -917,6 +917,107 @@ Password: password123
     }
     ```
 
+9. **All Location**
+   - **Route**: [/api/locations] (GET)
+
+- **Request Body**:
+
+  - **Response**:
+
+    ```json
+    {
+
+    "success": true,
+    "statusCode": 200,
+    "message": "All Location retrieved successfully",
+    "data": [
+        {
+            "_id": "67aad862880713655f0e47f8",
+            "divisions": [
+                {
+                    "name": "Dhaka",
+                    "districts": [
+                        {
+                            "name": "Dhaka",
+                            "towns": [
+                                "Dhamrai",
+                                "Dohar",
+                                "Keraniganj",
+                                "Nawabganj",
+                                "Savar",
+                                "Adabar",
+                                "Badda",
+                                "Demra",
+                                "Dhanmondi",
+                                "Gulshan",
+                                "Jatrabari",
+                                "Khilgaon",
+                                "Khilkhet",
+                                "Mirpur",
+                                "Mohammadpur",
+                                "New Market",
+                                "Paltan",
+                                "Panthapath",
+                                "Ramna",
+                                "Rampura",
+                                "Shahbag",
+                                "Tejgaon",
+                                "Uttara",
+                                "Wari"
+                            ]
+                        },
+                        {
+                            "name": "Faridpur",
+                            "towns": [
+                                "Alfadanga",
+                                "Bhanga",
+                                "Boalmari",
+                                "Charbhadrasan",
+                                "Faridpur Sadar",
+                                "Madhukhali",
+                                "Nagarkanda",
+                                "Sadarpur",
+                                "Saltha"
+                            ]
+                        }, ... ]
+                }
+            ]
+    }
+    ]
+    }
+    ```
+
+11. **Location towns Search**
+
+- **Route**: [/api/locations?towns=Rangpur] (GET)
+
+- **Request Body**:
+
+  - **Response**:
+    ```json
+    {
+      "success": true,
+      "statusCode": 200,
+      "message": "All Location retrieved successfully",
+      "data": {
+        "district": "Rangpur",
+        "totalTowns": 8,
+        "totalPages": 1,
+        "currentPage": 1,
+        "towns": [
+          "Badarganj",
+          "Mithapukur",
+          "Gangachara",
+          "Kaunia",
+          "Rangpur Sadar",
+          "Pirgacha",
+          "Pirganj",
+          "Taraganj"
+        ]
+      }
+    }
+    ```
+
 9. **Country Search**
    - **Route**: [/api/country?search=af] (GET)
 
